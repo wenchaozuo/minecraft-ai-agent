@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const registry = require\\('prismarine-registry'\\)\\('1.21.11'\\); const v = registry.version; console.log\\('version:', JSON.stringify\\(v\\)\\); console.log\\('minecraftVersion:', v.minecraftVersion\\); console.log\\('majorVersion:', v.majorVersion\\);\")",
+      "Bash(node -e \"const d4=require\\('./blocksStates/1.21.4.json'\\); const d11=require\\('./blocksStates/1.21.11.json'\\); console.log\\('1.21.4 entries:', Object.keys\\(d4\\).length\\); console.log\\('1.21.11 entries:', Object.keys\\(d11\\).length\\); console.log\\('stone 1.21.4:', JSON.stringify\\(d4.stone\\).substring\\(0,150\\)\\); console.log\\('stone 1.21.11:', JSON.stringify\\(d11.stone\\).substring\\(0,150\\)\\); console.log\\('---'\\); const sampleKey = Object.keys\\(d4\\).find\\(k => k.includes\\('torch'\\)\\); console.log\\('torch 1.21.4:', sampleKey, JSON.stringify\\(d4[sampleKey]\\).substring\\(0,200\\)\\); const sampleKey11 = Object.keys\\(d11\\).find\\(k => k.includes\\('torch'\\)\\); console.log\\('torch 1.21.11:', sampleKey11, JSON.stringify\\(d11[sampleKey11]\\).substring\\(0,200\\)\\);\")"
+    ]
+  }
+}

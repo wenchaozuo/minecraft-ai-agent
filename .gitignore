@@ -1,0 +1,38 @@
+# Minecraft 智能体项目 .gitignore
+
+# 依赖
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# 缓存/临时文件
+auth_cache/
+*.log
+*.tmp
+
+# 纹理资源（可选，如需节省仓库空间可忽略）
+textures/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# WorkBuddy
+.workbuddy/
