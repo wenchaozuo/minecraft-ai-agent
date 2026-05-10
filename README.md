@@ -154,3 +154,5 @@ node bot.js
 本项目探索将大语言模型与游戏智能体结合，让 AI 真正理解玩家意图并自主完成任务。欢迎交流讨论！
 
 > 当前使用 DeepSeek-v3.2 作为 LLM 后端，计划迁移至更多国产大模型。
+>
+> 🔗 在线仓库：https://github.com/wenchaozuo/minecraft-ai-agent

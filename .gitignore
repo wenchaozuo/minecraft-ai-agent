@@ -12,23 +12,21 @@ __pycache__/
 .Python
 env/
 venv/
-*.egg-info/
-dist/
-build/
+.venv/
 
-# 缓存/临时文件
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 缓存/日志
 auth_cache/
 *.log
 *.tmp
 
-# 纹理资源（可选，如需节省仓库空间可忽略）
+# 纹理资源（体积大，不建议放 git）
 textures/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
 
 # 系统文件
 .DS_Store
@@ -36,3 +34,9 @@ Thumbs.db
 
 # WorkBuddy
 .workbuddy/
+.claude/
+
+# 项目无关文件
+*.docx
+*.doc
+NVIDIA Corporation/
