@@ -1,158 +1,166 @@
-# 🎮 Minecraft 自主智能体系统
+# 🎮 Minecraft Autonomous AI Agent
 
-基于大语言模型（LLM）的 Minecraft 智能体，能够接收自然语言指令并自主规划、执行复杂游戏任务，无需人工逐步指导。
-
----
-
-## 🧠 核心能力
-
-| 能力 | 说明 |
-|------|------|
-| 自然语言理解 | 接收中文/英文指令，自动解析意图 |
-| 自主任务规划 | 将复杂指令分解为可执行的原子动作序列 |
-| 环境感知 | 实时扫描方块、实体、威胁、资源状态 |
-| 记忆系统 | 三层记忆（短期/长期/知识）维持跨轮上下文 |
-| 自主决策 | 基于 ReAct 范式进行推理与行动 |
-| 自动反馈 | 死亡复活、饱食度管理、执行结果校验 |
+A Minecraft intelligent agent powered by Large Language Models (LLM) that receives natural language instructions and autonomously plans/executes complex in-game tasks without step-by-step human guidance.
 
 ---
 
-## 🏗️ 系统架构
+## 🧠 Core Capabilities
+
+| Capability | Description |
+|------------|-------------|
+| Natural Language Understanding | Accepts Chinese/English instructions, automatically parses intent |
+| Autonomous Task Planning | Decomposes complex instructions into executable atomic action sequences |
+| Environment Perception | Real-time scanning of blocks, entities, threats, and resource status |
+| Memory System | Three-tier memory (short-term/long-term/knowledge) maintains cross-turn context |
+| Autonomous Decision Making | Reasoning and action based on ReAct paradigm |
+| Automatic Feedback | Death respawn, hunger management, execution result verification |
+
+---
+
+## 🏗️ System Architecture
 
 ```
 ┌─────────────────────────────────────────┐
-│           用户自然语言指令                │
-│     "去采集 10 个木头并制作工作台"        │
+│           User Natural Language         │
+│     "Collect 10 wood and craft a       │
+│      crafting table"                    │
 └────────────────┬────────────────────────┘
                  ▼
 ┌─────────────────────────────────────────┐
-│         AI 大脑层（Python Flask）         │
+│      AI Brain Layer (Python Flask)      │
 │  ┌─────────────────────────────────┐    │
-│  │   LLM 解析 → 结构化动作 JSON    │    │
+│  │   LLM Parsing → Structured      │    │
+│  │   Action JSON                    │    │
 │  └─────────────────────────────────┘    │
 │  ┌─────────────────────────────────┐    │
-│  │   记忆系统 / 目标规划器          │    │
+│  │   Memory System / Goal Planner  │    │
 │  └─────────────────────────────────┘    │
 └────────────────┬────────────────────────┘
                  ▼
 ┌─────────────────────────────────────────┐
-│      执行层（Node.js + Mineflayer）      │
+│    Execution Layer (Node.js + Mineflayer)│
 │  ┌─────┬─────┬─────┬─────┬─────┐      │
-│  │导航 │战斗 │挖掘 │放置 │物品 │  ... │
+│  │Navigate│Combat│Mine │Place│Items│...│
 │  └─────┴─────┴─────┴─────┴─────┘      │
 └─────────────────────────────────────────┘
 ```
 
-### 双进程架构
+### Dual-Process Architecture
 
-- **执行层**：Node.js + Mineflayer v4.36，连接 Minecraft 服务器，负责游戏内动作执行
-- **AI 大脑层**：Python Flask（监听 `:5000`），接入大模型进行决策，当前使用 DeepSeek-v3.2
-- **通信方式**：HTTP REST（JS → Python）
-
----
-
-## 📁 项目结构
-
-```
-Minecraft智能体项目/
-├── js/                   # Node.js 执行层
-│   ├── bot.js            # 主入口
-│   ├── communication/    # 聊天处理 / API 通信
-│   ├── core/             # 动作管理器 / 动作执行器
-│   ├── perception/       # 环境扫描（方块/实体）
-│   ├── skill/            # 9 个原子技能模块
-│   ├── feedback/         # 死亡复活 / 移动监控
-│   └── state/            # Bot 状态快照
-├── python/               # Python AI 层
-│   ├── server.py         # Flask 服务（/chat 接口）
-│   └── brain.py         # 预留扩展入口
-├── 设计文档/             # 架构设计文档（6 份）
-│   ├── 整体架构设计.md
-│   ├── 感知层升级设计.md
-│   ├── 记忆系统设计.md
-│   ├── 目标规划器设计.md
-│   ├── 自主决策循环设计.md
-│   └── 反思与自我修正设计.md
-└── textures/             # 游戏纹理资源
-```
+- **Execution Layer**: Node.js + Mineflayer v4.36, connects to Minecraft server, responsible for in-game action execution
+- **AI Brain Layer**: Python Flask (listening on `:5000`), integrates LLM for decision-making, currently using DeepSeek-v3.2
+- **Communication**: HTTP REST (JS → Python)
 
 ---
 
-## 🚀 快速开始
+## 📁 Project Structure
 
-### 环境要求
+```
+minecraft-ai-agent/
+├── js/                   # Node.js execution layer
+│   ├── bot.js            # Main entry point
+│   ├── communication/    # Chat handling / API communication
+│   ├── core/             # Action manager / Action executor
+│   ├── perception/       # Environment scanning (blocks/entities)
+│   ├── skill/            # 9 atomic skill modules
+│   ├── feedback/         # Death respawn / Movement monitoring
+│   └── state/            # Bot state snapshot
+├── python/               # Python AI layer
+│   ├── server.py         # Flask service (/chat endpoint)
+│   └── brain.py         # Reserved extension entry point
+├── design-docs/          # Architecture design documents (6 docs)
+│   ├── overall-architecture-design.md
+│   ├── perception-layer-upgrade-design.md
+│   ├── memory-system-design.md
+│   ├── goal-planner-design.md
+│   ├── autonomous-decision-loop-design.md
+│   └── reflection-self-correction-design.md
+└── textures/             # Game texture resources
+```
+
+---
+
+## 🚀 Quick Start
+
+### Requirements
 
 - Node.js ≥ 18
 - Python ≥ 3.8
-- Minecraft 服务器（支持 1.16+）
+- Minecraft server (supports 1.16+)
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
-# Node.js 依赖
+# Node.js dependencies
 npm install mineflayer prismarine-viewer
 
-# Python 依赖
+# Python dependencies
 pip install flask requests
 ```
 
-### 启动
+### Launch
 
 ```bash
-# 1. 启动 AI 大脑层
+# 1. Start AI brain layer
 cd python
 python server.py
 
-# 2. 启动 Bot 执行层（新终端）
+# 2. Start Bot execution layer (new terminal)
 cd js
 node bot.js
 ```
 
 ---
 
-## 📊 当前进度
+## 📊 Current Progress
 
-- [x] 核心框架开发完成（感知-决策-执行-反馈闭环）
-- [x] 9 个原子技能模块实现
-- [x] 忙碌锁防并发机制
-- [x] 死亡自动复活
-- [x] 饱食度自动进食
-- [x] prismarine-viewer 3D 可视化
-- [x] 6 份详细架构设计文档
-- [ ] brain.py 主动规划模块（设计中）
-- [ ] 记忆系统持久化
-- [ ] 反思与自我修正机制
-
----
-
-## 🎯 典型使用场景
-
-| 指令 | 智能体行为 |
-|------|-----------|
-| "去采集 10 个木头" | 自主导航 → 寻找树木 → 挖掘木头 → 确认数量 |
-| "制作一把木镐" | 检查物品栏 → 采集木材 → 打开合成界面 → 制作木镐 |
-| "去攻击附近的僵尸" | 扫描实体 → 定位僵尸 → 导航接近 → 攻击 |
-| "建造一个 5x5 的平台" | 规划平台坐标 → 采集方块 → 逐格放置 → 完成建造 |
+- [x] Core framework development complete (perception-decision-execution-feedback loop)
+- [x] 9 atomic skill modules implemented
+- [x] Busy lock concurrency prevention mechanism
+- [x] Automatic death respawn
+- [x] Automatic hunger management (eating when hungry)
+- [x] prismarine-viewer 3D visualization
+- [x] 6 detailed architecture design documents
+- [ ] brain.py active planning module (in design)
+- [ ] Memory system persistence
+- [ ] Reflection and self-correction mechanism
 
 ---
 
-## 📄 设计文档
+## 🎯 Typical Use Cases
 
-详细架构设计文档位于 `设计文档/` 目录，涵盖：
-
-1. **整体架构设计** — 系统总览与模块划分
-2. **感知层升级设计** — 环境感知方案
-3. **记忆系统设计** — 三层记忆架构
-4. **目标规划器设计** — 科技树与任务分解
-5. **自主决策循环设计** — ReAct 决策循环
-6. **反思与自我修正设计** — 失败分析与策略调整
+| Instruction | Agent Behavior |
+|-------------|----------------|
+| "Collect 10 wood" | Autonomous navigation → Find trees → Mine wood → Confirm quantity |
+| "Craft a wooden pickaxe" | Check inventory → Collect wood → Open crafting interface → Craft pickaxe |
+| "Attack nearby zombies" | Scan entities → Locate zombie → Navigate closer → Attack |
+| "Build a 5x5 platform" | Plan platform coordinates → Collect blocks → Place block by block → Complete construction |
 
 ---
 
-## 📌 关于本项目
+## 📄 Design Documents
 
-本项目探索将大语言模型与游戏智能体结合，让 AI 真正理解玩家意图并自主完成任务。欢迎交流讨论！
+Detailed architecture design documents are located in the `design-docs/` directory, covering:
 
-> 当前使用 DeepSeek-v3.2 作为 LLM 后端，计划迁移至更多国产大模型。
+1. **Overall Architecture Design** — System overview and module decomposition
+2. **Perception Layer Upgrade Design** — Environment perception solution
+3. **Memory System Design** — Three-tier memory architecture
+4. **Goal Planner Design** — Tech tree and task decomposition
+5. **Autonomous Decision Loop Design** — ReAct decision loop
+6. **Reflection and Self-Correction Design** — Failure analysis and strategy adjustment
+
+---
+
+## 📌 About This Project
+
+This project explores combining Large Language Models with game agents, enabling AI to truly understand player intent and autonomously complete tasks. Welcome to exchange ideas and discussions!
+
+> Currently using DeepSeek-v3.2 as the LLM backend, planning to migrate to more domestic large models.
 >
-> 🔗 在线仓库：https://github.com/wenchaozuo/minecraft-ai-agent
+> 🔗 Online Repository: https://github.com/wenchaozuo/minecraft-ai-agent
+
+---
+
+## 📝 License
+
+MIT License — free to use, modify, and distribute.
